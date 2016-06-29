@@ -14,4 +14,8 @@ public class App
     public static void metodo_jorge() {
     	System.out.println("Mi metodo");
     }
+    
+    public void Saludo(){
+    	System.out.println("Saludo");
+    }
 }
