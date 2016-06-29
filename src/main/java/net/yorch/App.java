@@ -10,6 +10,10 @@ public class App
     {
         System.out.println( "Hello ProInteractive !!!" );
     }
+
+    public static void metodo_jorge() {
+    	System.out.println("Mi metodo");
+    }
     
     public void Saludo(){
     	System.out.println("Saludo");
