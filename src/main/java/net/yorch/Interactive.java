@@ -1,8 +1,11 @@
+
 package net.yorch;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+
+import java.util.Scanner;
 
 /**
  * Interactive<br>
@@ -33,6 +36,7 @@ public class Interactive {
 	 */
 	private Map<String, String> cfg  = new HashMap<String, String>();
 	
+	Scanner entrada = new Scanner(System.in);
 	/**
 	 * Private Properties 
 	 */
@@ -51,6 +55,16 @@ public class Interactive {
 	 * Show Interactive Console
 	 */
 	public void interactive() {
+		//recorrer el map y mostrar mensaje, pedir los valores en el interactive
+		System.out.println("Teclee valor de variable");
+		
+		cfg.put("","");
+		cfg.put("","");
+		cfg.put("","");
+		cfg.put("","");
+		cfg.put("","");
+		cfg.put("","");
+		
 		System.out.println("Teclee valor de variable");
 	}
 	
