@@ -10,4 +10,8 @@ public class App
     {
         System.out.println( "Hello ProInteractive !!!" );
     }
+    
+    public void Saludo(){
+    	System.out.println("Saludo");
+    }
 }
