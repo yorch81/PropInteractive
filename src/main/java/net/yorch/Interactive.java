@@ -1,11 +1,19 @@
 
 package net.yorch;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
 import java.util.Scanner;
+
+
 
 /**
  * Interactive<br>
@@ -34,13 +42,14 @@ public class Interactive {
 	/**
 	 * Private Configuration Map
 	 */
-	private Map<String, String> cfg  = new HashMap<String, String>();
+	private Map<String, String> cfg  = new LinkedHashMap<String, String>();
 	
 	Scanner entrada = new Scanner(System.in);
 	/**
 	 * Private Properties 
 	 */
 	private Properties propCfg = new Properties();
+	private OutputStream salida = null;
 	
 	/**
 	 * Constructor Class
@@ -53,19 +62,26 @@ public class Interactive {
 	
 	/**
 	 * Show Interactive Console
+	 * @throws IOException 
 	 */
-	public void interactive() {
-		//recorrer el map y mostrar mensaje, pedir los valores en el interactive
-		System.out.println("Teclee valor de variable");
+	public void interactive() throws IOException {
 		
-		cfg.put("","");
-		cfg.put("","");
-		cfg.put("","");
-		cfg.put("","");
-		cfg.put("","");
-		cfg.put("","");
+		//recorrer el map y mostrar mensaje, pedir los valores a guardar	
 		
-		System.out.println("Teclee valor de variable");
+		
+		Iterator it = cfg.entrySet().iterator();
+		
+		while(it.hasNext())
+		{	
+			
+			Map.Entry e = (Map.Entry)it.next();
+			System.out.println(e.getValue());
+			String aux = entrada.nextLine();
+			//Introducir valores al .propertie
+			propCfg.setProperty(e.getKey().toString(),aux);
+			
+		}
+		
 	}
 	
 	/**
@@ -73,8 +89,16 @@ public class Interactive {
 	 * 
 	 * @param fileName String Full File Name
 	 * @return boolean
+	 * @throws IOException 
 	 */
-	public boolean save(String fileName) {
+	public boolean save(String fileName) throws IOException {
+		salida = new FileOutputStream(fileName + ".properties");
+		propCfg.store(salida, null);
+
+		if(salida != null){
+			salida.close();
+			System.out.println("Archivo " + fileName + ".properties generado");
+		}
 		return true;
 	}
 }
