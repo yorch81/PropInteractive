@@ -4,9 +4,48 @@
   <groupId>net.yorch</groupId>
   <artifactId>PropInteractive</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
+
   <name>PropInteractive</name>
-  <url>http://maven.apache.org</url>
+  <description>Creates a Properties File with Interactive Console</description>
+  <url>https://github.com/yorch81/PropInteractive</url>
+
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <project.build.sourceEncoding>ISO-8859-5</project.build.sourceEncoding> 
+  </properties>
+
+  <build>  
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -15,4 +54,12 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <distributionManagement>
+      <repository>
+          <id>bintray-yorch81-maven</id>
+          <name>yorch81-maven</name>
+          <url>https://api.bintray.com/maven/yorch81/maven/PropInteractive/;publish=1</url>
+      </repository>
+  </distributionManagement>
 </project>

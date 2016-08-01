@@ -5,22 +5,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
-
 import java.util.Scanner;
-
-
 
 /**
  * Interactive<br>
  * 
- * Interactive Class to Creates a Properties Files with Interactive Console<br><br>
+ * Interactive Class to Creates a Properties File with Interactive Console<br><br>
  * 
- * Copyright 2016 Carlos Ismael
+ * Copyright 2016 Carlos Ismael Garcia Sanchez
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,54 +31,61 @@ import java.util.Scanner;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * @version    1.0.0, 2016-06-29
- * @author     <a href="mailto:the.yorch@gmail.com">Jorge Alberto Ponce Turrubiates</a>
+ * @version    1.0, 2016-06-29
+ * @author     <a href="mailto:carlosismael4@hotmail.com">Carlos Ismael Garcia Sanchez</a>
  */
 public class Interactive {
-	
 	/**
 	 * Private Configuration Map
 	 */
 	private Map<String, String> cfg  = new LinkedHashMap<String, String>();
 	
-	Scanner entrada = new Scanner(System.in);
+	/**
+	 * Keyboard Input
+	 */
+	Scanner keyb = new Scanner(System.in);
+	
 	/**
 	 * Private Properties 
 	 */
 	private Properties propCfg = new Properties();
-	private OutputStream salida = null;
 	
 	/**
-	 * Constructor Class
-	 * 
-	 * @param config Map<String, String> Configuration Map
+	 * Create New Interactive
 	 */
-	public Interactive(Map<String, String> config) {
-		cfg = config;
+	public Interactive() {
+		
+	}
+	
+	/**
+	 * Add Question
+	 * 
+	 * @param property String Property Name
+	 * @param question String Question
+	 */
+	public void addQuestion(String property, String question) {
+		cfg.put(property, question);
 	}
 	
 	/**
 	 * Show Interactive Console
-	 * @throws IOException 
 	 */
-	public void interactive() throws IOException {
+	public void interactive() {
+		Iterator<Entry<String, String>> it = cfg.entrySet().iterator();
 		
-		//recorrer el map y mostrar mensaje, pedir los valores a guardar	
-		
-		
-		Iterator it = cfg.entrySet().iterator();
-		
-		while(it.hasNext())
-		{	
-			
+		while(it.hasNext()) {
+			@SuppressWarnings("rawtypes")
 			Map.Entry e = (Map.Entry)it.next();
-			System.out.println(e.getValue());
-			String aux = entrada.nextLine();
-			//Introducir valores al .propertie
-			propCfg.setProperty(e.getKey().toString(),aux);
 			
-		}
-		
+			// Show Question
+			System.out.println(e.getValue());
+			
+			// Type Property
+			String aux = keyb.nextLine();
+			
+			// Add to Properties
+			propCfg.setProperty(e.getKey().toString(),aux);
+		}	
 	}
 	
 	/**
@@ -89,16 +93,27 @@ public class Interactive {
 	 * 
 	 * @param fileName String Full File Name
 	 * @return boolean
-	 * @throws IOException 
 	 */
-	public boolean save(String fileName) throws IOException {
-		salida = new FileOutputStream(fileName + ".properties");
-		propCfg.store(salida, null);
+	public boolean save(String fileName) {
+		OutputStream propFile = null;
+		boolean retValue = false;
+		
+		try {
+			propFile = new FileOutputStream(fileName);
+			
+			propCfg.store(propFile, null);
 
-		if(salida != null){
-			salida.close();
-			System.out.println("Archivo " + fileName + ".properties generado");
+			if(propFile != null){
+				propFile.close();
+				
+				retValue = true;
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return true;
+		
+		return retValue;
 	}
 }
